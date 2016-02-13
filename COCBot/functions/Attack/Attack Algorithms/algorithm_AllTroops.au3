@@ -303,107 +303,6 @@ Func dropRemainingTroops($nbSides) ; Uses any left over troops
 	Next
 EndFunc   ;==>dropRemainingTroops
 
-Func outsidecollector($nbSides,$listInfoDeploy) ; change the sterategy
-	Local $listListInfoDeployTroopPixel[0]
-	Local $pixelRandomDrop[2]
-	Local $pixelRandomDropcc[2]
-	$countFindPixCloser = 0
-	$countCollectorexposed = 0
-
-		For $i = 0 To UBound($listInfoDeploy) - 1
-			Local $troop = -1
-			Local $troopNb = 0
-			Local $name = ""
-			$troopKind = $listInfoDeploy[$i][0]
-			$nbSides = $listInfoDeploy[$i][1]
-			$waveNb = $listInfoDeploy[$i][2]
-			$maxWaveNb = $listInfoDeploy[$i][3]
-			$slotsPerEdge = $listInfoDeploy[$i][4]
-			If $debugSetlog = 1 Then SetLog("**ListInfoDeploy row " & $i & ": USE " & $troopKind & " SIDES " & $nbSides & " WAVE " & $waveNb & " XWAVE " & $maxWaveNb & " SLOTXEDGE " & $slotsPerEdge, $COLOR_PURPLE)
-			If (IsNumber($troopKind)) Then
-				For $j = 0 To UBound($atkTroops) - 1 ; identify the position of this kind of troop
-					If $atkTroops[$j][0] = $troopKind Then
-						$troop = $j
-						$troopNb = Ceiling($atkTroops[$j][1] / $maxWaveNb)
-						Local $plural = 0
-						If $troopNb > 1 Then $plural = 1
-						$name = NameOfTroop($troopKind, $plural)
-					EndIf
-				Next
-			EndIf
-			If ($troop <> -1 And $troopNb > 0) Or IsString($troopKind) Then
-				Local $listInfoDeployTroopPixel
-				If (UBound($listListInfoDeployTroopPixel) < $waveNb) Then
-					ReDim $listListInfoDeployTroopPixel[$waveNb]
-					Local $newListInfoDeployTroopPixel[0]
-					$listListInfoDeployTroopPixel[$waveNb - 1] = $newListInfoDeployTroopPixel
-				EndIf
-				$listInfoDeployTroopPixel = $listListInfoDeployTroopPixel[$waveNb - 1]
-
-				ReDim $listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) + 1]
-				If (IsString($troopKind)) Then
-					Local $arrCCorHeroes[1] = [$troopKind]
-					$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $arrCCorHeroes
-				Else
-					Local $infoDropTroop = DropTroop2($troop, $nbSides, $troopNb, $slotsPerEdge, $name)
-					$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $infoDropTroop
-				EndIf
-				$listListInfoDeployTroopPixel[$waveNb - 1] = $listInfoDeployTroopPixel
-			EndIf
-		Next
-
-		Setlog("There are " & $countCollectorexposed & " collector(s) near RED LINE out of " & (UBound($PixelNearCollector)-$wrongcollectornumber) & " collectors")
-		If _Sleep(100) Then Return
-
-		If ($countCollectorexposed / (UBound($PixelNearCollector) - $wrongcollectornumber) * 100) < $percentCollectors Then
-			Switch ($icmbInsideCol + 1)
-				Case 1
-					SetLog("Changing Attack Strategy to All Sides Attack!...")
-					If _Sleep(50) Then Return
-					$nbSides = 4
-					$saveTroops = 0
-					Local $listInfoDeploy2[14][5] = [[$eGiant, $nbSides, 1, 1, 2] _
-							, [$eBarb, $nbSides, 1, 2, 0] _
-							, [$eWall, $nbSides, 1, 1, 1] _
-							, [$eArch, $nbSides, 1, 2, 0] _
-							, [$eBarb, $nbSides, 2, 2, 0] _
-							, [$eGobl, $nbSides, 1, 2, 0] _
-							, ["CC", 1, 1, 1, 1] _
-							, [$eHogs, $nbSides, 1, 1, 1] _
-							, [$eWiza, $nbSides, 1, 1, 0] _
-							, [$eBall, $nbSides, 1, 1, 0] _
-							, [$eMini, $nbSides, 1, 1, 0] _
-							, [$eArch, $nbSides, 2, 2, 0] _
-							, [$eGobl, $nbSides, 2, 2, 0] _
-							, ["HEROES", 1, 2, 1, 1] _
-							]
-
-				Case 2
-					SetLog("Changing Attack Strategy to Four Finger Barch!...")
-					If _Sleep(50) Then Return
-					$nbSides = 5
-					$FourFinger = 1
-					Local $listInfoDeploy2[11][5] = [[$eGiant, $nbSides, 1, 1, 2] _
-												  , [$eBarb, $nbSides, 1, 1, 0] _
-												  , [$eWall, $nbSides, 1, 1, 1] _
-												  , [$eArch, $nbSides, 1, 1, 0] _
-												  , [$eGobl, $nbSides, 1, 2, 0] _
-												  , ["CC", 1, 1, 1, 1] _
-												  , [$eHogs, $nbSides, 1, 1, 1] _
-												  , [$eWiza, $nbSides, 1, 1, 0] _
-												  , [$eMini, $nbSides, 1, 1, 0] _
-												  , [$eGobl, $nbSides, 2, 2, 0] _
-												  , ["HEROES", 1, 2, 1, 1] _
-													]
-				Case 3
-					Return
-			EndSwitch
-		Else
-			Local $listInfoDeploy2 = $listInfoDeploy
-		EndIf
-	Return $listInfoDeploy2
-EndFunc ;end function outside collector
-
 Func CloseBattle()
 		For $i = 1 To 30
 			;_CaptureRegion()
@@ -444,10 +343,13 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	$isHeroesDropped = False
 	$DeployHeroesPosition[0] = -1
 	$DeployHeroesPosition[1] = -1
-	If $saveTroops = 1 And $useFFBarchST = 1 Then
-		$listInfoDeploy = outsidecollector($nbSides,$listInfoDeploy)
+	If $saveTroops = 1 Then
+		If $useFFBarchST = 1 Then $listInfoDeploy = outsidecollector($nbSides,$listInfoDeploy)
+		Savetroop($listInfoDeploy, $CC, $King, $Queen, $Warden)
+	Else
+		LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 	EndIf
-	LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
+
 	If _Sleep($iDelayalgorithm_AllTroops4) Then Return
 	If $smartsaveend = 0 then
 		dropRemainingTroops($nbSides)

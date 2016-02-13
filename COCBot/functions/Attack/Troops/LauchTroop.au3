@@ -52,8 +52,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 	Local $listListInfoDeployTroopPixel[0]
 	Local $pixelRandomDrop[2]
 	Local $pixelRandomDropcc[2]
-	$countFindPixCloser = 0
-	$countCollectorexposed = 0
+
 
 	If ($iChkRedArea[$iMatchMode] = 1) And $FourFinger = 0 Then
 		For $i = 0 To UBound($listInfoDeploy) - 1
@@ -153,127 +152,6 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 					EndIf
 					If _Sleep(SetSleep(1)) Then Return
 				Next
-
-	            If $saveTroops = 1 Then
-
-					Local $timeSC = 0
-					While $timeSC < 35
-						CheckHeroesHealth()
-						If _Sleep(1000) Then Return
-						CheckHeroesHealth()
-						$timeSC += 1
-					WEnd
-
-					Setlog("Checking for remaining collectors...")
-
-
-					Global $PixelMine[0]
-					Global $PixelElixir[0]
-					Global $PixelDarkElixir[0]
-					Global $PixelNearCollector[0]
-
-					; If drop troop near gold mine
-					If ($iChkSmartAttack[$iMatchMode][0] = 1) Then
-						$PixelMine = GetLocationMine2()
-						If (IsArray($PixelMine)) Then
-							_ArrayAdd($PixelNearCollector, $PixelMine)
-						EndIf
-						SetLog("[" & UBound($PixelMine) & "] Gold Mines")
-					EndIf
-
-
-					_WinAPI_DeleteObject($hBitmapFirst)
-					$hBitmapFirst = _CaptureRegion2()
-					; If drop troop near elixir collector
-					If ($iChkSmartAttack[$iMatchMode][1] = 1) Then
-						$PixelElixir = GetLocationElixir()
-						local $PixelElixirx = 0
-						Global $iPixelElixir[0]
-						If (IsArray($PixelElixir)) Then
-							For $i = 0 To UBound($PixelElixir) - 1
-								If isInsideDiamond($PixelElixir[$i]) Then
-									$PixelElixirx +=1
-									ReDim $iPixelElixir[$PixelElixirx]
-									$iPixelElixir[$PixelElixirx - 1] = $PixelElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelElixir) & "] Elixir Collectors")
-						EndIf
-
-					; If drop troop near dark elixir drill
-					If ($iChkSmartAttack[$iMatchMode][2] = 1) Then
-						$PixelDarkElixir = GetLocationDarkElixir()
-						local $PixelDarkElixirx = 0
-						Global $iPixelDarkElixir[0]
-						If (IsArray($PixelDarkElixir)) Then
-							For $i = 0 To UBound($PixelDarkElixir) - 1
-								If isInsideDiamond($PixelDarkElixir[$i]) Then
-									$PixelDarkElixirx +=1
-									ReDim $iPixelDarkElixir[$PixelDarkElixirx]
-									$iPixelDarkElixir[$PixelDarkElixirx - 1] = $PixelDarkElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelDarkElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelDarkElixir) & "] Dark Elixir Drill/s")
-					EndIf
-
-
-					If  UBound($PixelNearCollector) > $wrongcollectornumber Then
-						SetLog("Continue attacking...")
-					Else
-						SetLog("No remaining collectors. End battle!...")
-						$smartsaveend = 1
-						Return
-					EndIf
-
-					Local $listListInfoDeployTroopPixel[0]
-
-					For $i = 0 To UBound($listInfoDeploy) - 1
-						Local $troop = -1
-						Local $troopNb = 0
-						Local $name = ""
-						$troopKind = $listInfoDeploy[$i][0]
-						$nbSides = $listInfoDeploy[$i][1]
-						$waveNb = $listInfoDeploy[$i][2]
-						$maxWaveNb = $listInfoDeploy[$i][3]
-						$slotsPerEdge = $listInfoDeploy[$i][4]
-						If (IsNumber($troopKind)) Then
-							For $j = 0 To UBound($atkTroops) - 1 ; identify the position of this kind of troop
-								If $atkTroops[$j][0] = $troopKind Then
-									$troop = $j
-									$troopNb = Ceiling($atkTroops[$j][1] / $maxWaveNb)
-									Local $plural = 0
-									If $troopNb > 1 Then $plural = 1
-									$name = NameOfTroop($troopKind, $plural)
-								EndIf
-							Next
-						EndIf
-						If ($troop <> -1 And $troopNb > 0) Or IsString($troopKind) Then
-							Local $listInfoDeployTroopPixel
-							If (UBound($listListInfoDeployTroopPixel) < $waveNb) Then
-								ReDim $listListInfoDeployTroopPixel[$waveNb]
-								Local $newListInfoDeployTroopPixel[0]
-								$listListInfoDeployTroopPixel[$waveNb - 1] = $newListInfoDeployTroopPixel
-							EndIf
-						$listInfoDeployTroopPixel = $listListInfoDeployTroopPixel[$waveNb - 1]
-
-						ReDim $listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) + 1]
-						If (IsString($troopKind)) Then
-							Local $arrCCorHeroes[1] = [$troopKind]
-							$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $arrCCorHeroes
-						Else
-							If $troopNb > (UBound($PixelNearCollector)*5) Then $troopNb = (UBound($PixelNearCollector)*5)
-							Local $infoDropTroop = DropTroop2($troop, $nbSides, $troopNb, $slotsPerEdge, $name)
-							$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $infoDropTroop
-						EndIf
-						$listListInfoDeployTroopPixel[$waveNb - 1] = $listInfoDeployTroopPixel
-						EndIf
-					Next
-				EndIf
-
 			Next
 		Else
 			For $numWave = 0 To UBound($listListInfoDeployTroopPixel) - 1
@@ -343,125 +221,6 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 					EndIf
 				EndIf
 				If _Sleep(SetSleep(1)) Then Return
-
-	            If $saveTroops = 1 Then
-
-					Local $timeSC = 0
-					While $timeSC < 35
-						CheckHeroesHealth()
-						If _Sleep(1000) Then Return
-						CheckHeroesHealth()
-						$timeSC += 1
-					WEnd
-
-					Setlog("Checking for remaining collectors...")
-
-					Global $PixelMine[0]
-					Global $PixelElixir[0]
-					Global $PixelDarkElixir[0]
-					Global $PixelNearCollector[0]
-
-					; If drop troop near gold mine
-					If ($iChkSmartAttack[$iMatchMode][0] = 1) Then
-						$PixelMine = GetLocationMine2()
-						If (IsArray($PixelMine)) Then
-							_ArrayAdd($PixelNearCollector, $PixelMine)
-						EndIf
-						SetLog("[" & UBound($PixelMine) & "] Gold Mines")
-					EndIf
-
-					_WinAPI_DeleteObject($hBitmapFirst)
-					$hBitmapFirst = _CaptureRegion2()
-					; If drop troop near elixir collector
-					If ($iChkSmartAttack[$iMatchMode][1] = 1) Then
-						$PixelElixir = GetLocationElixir()
-						local $PixelElixirx = 0
-						Global $iPixelElixir[0]
-						If (IsArray($PixelElixir)) Then
-							For $i = 0 To UBound($PixelElixir) - 1
-								If isInsideDiamond($PixelElixir[$i]) Then
-									$PixelElixirx +=1
-									ReDim $iPixelElixir[$PixelElixirx]
-									$iPixelElixir[$PixelElixirx - 1] = $PixelElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelElixir) & "] Elixir Collectors")
-						EndIf
-
-					; If drop troop near dark elixir drill
-					If ($iChkSmartAttack[$iMatchMode][2] = 1) Then
-						$PixelDarkElixir = GetLocationDarkElixir()
-						local $PixelDarkElixirx = 0
-						Global $iPixelDarkElixir[0]
-						If (IsArray($PixelDarkElixir)) Then
-							For $i = 0 To UBound($PixelDarkElixir) - 1
-								If isInsideDiamond($PixelDarkElixir[$i]) Then
-									$PixelDarkElixirx +=1
-									ReDim $iPixelDarkElixir[$PixelDarkElixirx]
-									$iPixelDarkElixir[$PixelDarkElixirx - 1] = $PixelDarkElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelDarkElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelDarkElixir) & "] Dark Elixir Drill/s")
-					EndIf
-
-
-					If UBound($PixelNearCollector) > $wrongcollectornumber Then
-						SetLog("Continue attacking...")
-					Else
-						SetLog("No remaining collectors. End battle!...")
-						$smartsaveend = 1
-						Return
-					EndIf
-
-					Local $listListInfoDeployTroopPixel[0]
-
-					For $i = 0 To UBound($listInfoDeploy) - 1
-						Local $troop = -1
-						Local $troopNb = 0
-						Local $name = ""
-						$troopKind = $listInfoDeploy[$i][0]
-						$nbSides = $listInfoDeploy[$i][1]
-						$waveNb = $listInfoDeploy[$i][2]
-						$maxWaveNb = $listInfoDeploy[$i][3]
-						$slotsPerEdge = $listInfoDeploy[$i][4]
-						If (IsNumber($troopKind)) Then
-							For $j = 0 To UBound($atkTroops) - 1 ; identify the position of this kind of troop
-								If $atkTroops[$j][0] = $troopKind Then
-									$troop = $j
-									$troopNb = Ceiling($atkTroops[$j][1] / $maxWaveNb)
-									Local $plural = 0
-									If $troopNb > 1 Then $plural = 1
-									$name = NameOfTroop($troopKind, $plural)
-								EndIf
-							Next
-						EndIf
-						If ($troop <> -1 And $troopNb > 0) Or IsString($troopKind) Then
-							Local $listInfoDeployTroopPixel
-							If (UBound($listListInfoDeployTroopPixel) < $waveNb) Then
-								ReDim $listListInfoDeployTroopPixel[$waveNb]
-								Local $newListInfoDeployTroopPixel[0]
-								$listListInfoDeployTroopPixel[$waveNb - 1] = $newListInfoDeployTroopPixel
-							EndIf
-						$listInfoDeployTroopPixel = $listListInfoDeployTroopPixel[$waveNb - 1]
-
-						ReDim $listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) + 1]
-						If (IsString($troopKind)) Then
-							Local $arrCCorHeroes[1] = [$troopKind]
-							$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $arrCCorHeroes
-						Else
-							If $troopNb > (UBound($PixelNearCollector)*5) Then $troopNb = (UBound($PixelNearCollector)*5)
-							Local $infoDropTroop = DropTroop2($troop, $nbSides, $troopNb, $slotsPerEdge, $name)
-							$listInfoDeployTroopPixel[UBound($listInfoDeployTroopPixel) - 1] = $infoDropTroop
-						EndIf
-						$listListInfoDeployTroopPixel[$waveNb - 1] = $listInfoDeployTroopPixel
-						EndIf
-					Next
-				EndIf
-
 			Next
 		EndIf
 		For $numWave = 0 To UBound($listListInfoDeployTroopPixel) - 1
@@ -475,7 +234,6 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 						If _Sleep($iDelayLaunchTroop21) Then Return
 						SelectDropTroop($infoPixelDropTroop[0]) ;Select Troop
 						If _Sleep($iDelayLaunchTroop23) Then Return
-						If $saveTroops =1 And $numberLeft > (UBound($PixelNearCollector)*5) Then $numberLeft =  (UBound($PixelNearCollector)*5)
 						SetLog("Dropping last " & $numberLeft & "  of " & $infoPixelDropTroop[5], $COLOR_GREEN)
 
 						DropOnPixel($infoPixelDropTroop[0], $infoPixelDropTroop[1], Ceiling($numberLeft / UBound($infoPixelDropTroop[1])), $infoPixelDropTroop[3])
@@ -483,82 +241,6 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 				EndIf
 			Next
 		Next
-
-				If $saveTroops = 1 Then
-
-					Local $timeSC = 0
-					While $timeSC < 20
-						CheckHeroesHealth()
-						If _Sleep(1000) Then Return
-						CheckHeroesHealth()
-						$timeSC += 1
-					WEnd
-
-					Setlog("Checking for remaining collectors...")
-
-					Global $PixelMine[0]
-					Global $PixelElixir[0]
-					Global $PixelDarkElixir[0]
-					Global $PixelNearCollector[0]
-
-					; If drop troop near gold mine
-					If ($iChkSmartAttack[$iMatchMode][0] = 1) Then
-						$PixelMine = GetLocationMine2()
-						If (IsArray($PixelMine)) Then
-							_ArrayAdd($PixelNearCollector, $PixelMine)
-						EndIf
-						SetLog("[" & UBound($PixelMine) & "] Gold Mines")
-					EndIf
-
-
-					_WinAPI_DeleteObject($hBitmapFirst)
-					$hBitmapFirst = _CaptureRegion2()
-					; If drop troop near elixir collector
-					If ($iChkSmartAttack[$iMatchMode][1] = 1) Then
-						$PixelElixir = GetLocationElixir()
-						local $PixelElixirx = 0
-						Global $iPixelElixir[0]
-						If (IsArray($PixelElixir)) Then
-							For $i = 0 To UBound($PixelElixir) - 1
-								If isInsideDiamond($PixelElixir[$i]) Then
-									$PixelElixirx +=1
-									ReDim $iPixelElixir[$PixelElixirx]
-									$iPixelElixir[$PixelElixirx - 1] = $PixelElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelElixir) & "] Elixir Collectors")
-						EndIf
-
-					; If drop troop near dark elixir drill
-					If ($iChkSmartAttack[$iMatchMode][2] = 1) Then
-						$PixelDarkElixir = GetLocationDarkElixir()
-						local $PixelDarkElixirx = 0
-						Global $iPixelDarkElixir[0]
-						If (IsArray($PixelDarkElixir)) Then
-							For $i = 0 To UBound($PixelDarkElixir) - 1
-								If isInsideDiamond($PixelDarkElixir[$i]) Then
-									$PixelDarkElixirx +=1
-									ReDim $iPixelDarkElixir[$PixelDarkElixirx]
-									$iPixelDarkElixir[$PixelDarkElixirx - 1] = $PixelDarkElixir[$i]
-								EndIf
-							Next
-							_ArrayAdd($PixelNearCollector, $iPixelDarkElixir)
-						EndIf
-						SetLog("[" & UBound($iPixelDarkElixir) & "] Dark Elixir Drill/s")
-					EndIf
-
-
-					If UBound($PixelNearCollector) > $wrongcollectornumber Then
-						SetLog("Continue attacking...")
-					Else
-						SetLog("No remaining collectors. End battle!...")
-						$smartsaveend = 1
-						Return
-					EndIf
-				EndIf
-
 	Else
 		For $i = 0 To UBound($listInfoDeploy) - 1
 			If (IsString($listInfoDeploy[$i][0]) And ($listInfoDeploy[$i][0] = "CC" Or $listInfoDeploy[$i][0] = "HEROES")) Then
@@ -584,16 +266,3 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 	EndIf
 	Return True
 EndFunc   ;==>LaunchTroop2
-
-Func FindPixelDistance($iPixel = 0, $iPixelCloser = 0)
-
-	If $saveTroops = 1 Then
-		If $countFindPixCloser < UBound($PixelNearCollector) Then
-			Local $DistancePixeltoPixCLoser = Sqrt(($iPixelCloser[0] - $iPixel[0]) ^ 2 + ($iPixelCloser[1] - $iPixel[1]) ^ 2)
-			;setlog("Distance is " & $DistancePixeltoPixCLoser)
-			If $DistancePixeltoPixCLoser < 51 Then $countCollectorexposed += 1
-			$countFindPixCloser += 1
-		EndIf
-	EndIf
-
-EndFunc   ;==>FindPixelDistance
