@@ -4,8 +4,8 @@
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
-; Author ........: 
-; Modified ......: 
+; Author ........:
+; Modified ......:
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -44,9 +44,11 @@ Func cmbProfile()
 	$dirLogs = $sProfilePath & "\" & $sCurrProfile & "\Logs\"
 	$dirLoots = $sProfilePath & "\" & $sCurrProfile & "\Loots\"
 	$dirTemp = $sProfilePath & "\" & $sCurrProfile & "\Temp\"
+	$dirTempDebug = $sProfilePath & "\" & $sCurrProfile & "\Temp\Debug\"
 	DirCreate($dirLogs)
 	DirCreate($dirLoots)
 	DirCreate($dirTemp)
+	DirCreate($dirTempDebug)
 	readConfig()
 	applyConfig()
 	saveConfig()
@@ -55,8 +57,8 @@ EndFunc   ;==>cmbProfile
 
 Func txtVillageName()
 	$iVillageName = GUICtrlRead($txtVillageName)
-	If $iVillageName = "" Then $iVillageName = "Main"
-	GUICtrlSetData($grpVillage, "Village: " & $iVillageName)
+	If $iVillageName = "" Then $iVillageName = "MyVillage"
+	GUICtrlSetData($grpVillage, GetTranslated(13, 21, "Village") & ": " & $iVillageName)
 	GUICtrlSetData($OrigPushB, $iVillageName)
 	GUICtrlSetData($txtVillageName, $iVillageName)
 

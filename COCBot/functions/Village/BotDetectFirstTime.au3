@@ -188,5 +188,6 @@ Func BotDetectFirstTime()
 		EndIf
 		$t =0
 	EndIf
+	Getchatid()
 
 EndFunc   ;==>BotDetectFirstTime

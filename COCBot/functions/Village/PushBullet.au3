@@ -173,26 +173,27 @@ Func _RemoteControl()
 					case "\/START"
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "select your remote", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "select your remote", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 					Case "HELP\N\U2753"
-						 Local $txtHelp = "You can remotely control your bot sending commands following this syntax:"
+						 Local $txtHelp = "You can remotely control your bot by selecting this key"
 						$txtHelp &= "\n" & "HELP - send this help message"
-						$txtHelp &= "\n" & "DELETE  - delete all your previous Push message"
-						$txtHelp &= "\n" & "RESTART - restart the bot named <Village Name> and bluestacks"
-						$txtHelp &= "\n" & "STOP - stop the bot named <Village Name>"
-						$txtHelp &= "\n" & "PAUSE - pause the bot named <Village Name>"
-						$txtHelp &= "\n" & "RESUME   - resume the bot named <Village Name>"
-						$txtHelp &= "\n" & "STATS - send Village Statistics of <Village Name>"
-						$txtHelp &= "\n" & "LOG - send the current log file of <Village Name>"
-						$txtHelp &= "\n" & "LASTRAID - send the last raid loot screenshot of <Village Name>"
-						$txtHelp &= "\n" & "LASTRAIDTXT - send the last raid loot values of <Village Name>"
-						$txtHelp &= "\n" & "SCREENSHOT - send a screenshot of <Village Name>"
+						$txtHelp &= "\n" & "DELETE  - Use this if Remote dont respond to your request"
+						$txtHelp &= "\n" & "RESTART - restart the bot and bluestacks"
+						$txtHelp &= "\n" & "STOP - stop the bot"
+						$txtHelp &= "\n" & "PAUSE - pause the bot"
+						$txtHelp &= "\n" & "RESUME   - resume the bot"
+						$txtHelp &= "\n" & "STATS - send Village Statistics"
+						;$txtHelp &= "\n" & "LOG - send the current log file of <Village Name>"
+						$txtHelp &= "\n" & "LASTRAID - send the last raid loot screenshot. you should check Take Loot snapshot in End Battle Tab "
+						$txtHelp &= "\n" & "LASTRAIDTXT - send the last raid loot values"
+						$txtHelp &= "\n" & "SCREENSHOT - send a screenshot"
+						$txtHelp &= "\n" & "POWER - select powr option"
 						$txtHelp &= "\n"
-						$txtHelp &= "\n" & "Send and recieve chats via pushbullet. Use BOT <myvillage> GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and BOT <myvillage> SENDCHAT <chat message> to send a chat to your clan"
+						;$txtHelp &= "\n" & "Send and recieve chats via pushbullet. Use BOT <myvillage> GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and BOT <myvillage> SENDCHAT <chat message> to send a chat to your clan"
 						_Push($iOrigPushB & " | Request for Help" & "\n" & $txtHelp)
 						SetLog("Telegram: Your request has been received from ' " & $iOrigPushB & ". Help has been sent", $COLOR_GREEN)
-					Case "PAUSE\N\u23f8"
+					Case "PAUSE\N\U23F8"
 						If $TPaused = False And $Runstate = True Then
 						 TogglePauseImpl("Push")
 						Else
@@ -215,42 +216,42 @@ Func _RemoteControl()
 						;_PushFile2($sLogFName, "logs", "text/plain; charset=utf-8", $iOrigPushB & " | Current Log " & "\n")
 						;_PushFile2($sLogFName, "logs", "application\/octet-stream", $iOrigPushB & " | Current Log " & "\n")
 						;_PushFile2($sLogFName, "logs", "application/octet-stream", $iOrigPushB & " | Current Log " & "\n")
-					 Case "POWER\N\ud83d\udda5"
+					Case "POWER\N\Ud83D\UDDA5"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". POWER option now sent", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
 						local $ppush3 = '{"text": "select POWER option", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Hibernate\n\u26a0\ufe0f","Shut down\n\u26a0\ufe0f","Standby\n\u26a0\ufe0f"],["Cancel"]],"one_time_keyboard": true,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
-					 Case "Hibernate\n\u26a0\ufe0f"
+					Case "HIBERNATE\N\U26A0\UFE0F"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Hibernate PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
 						local $ppush3 = '{"text": "PC got Hibernate", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(64)
-					 Case "Shut down\n\u26a0\ufe0f"
+					Case "SHUT DOWN\N\U26A0\UFE0F"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Shut down PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
 						local $ppush3 = '{"text": "PC got Shutdown", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(5)
-					 Case "Standby\n\u26a0\ufe0f"
+					Case "STANDBY\N\U26A0\UFE0F"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Standby PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
 						local $ppush3 = '{"text": "PC got Standby", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(32)
-					Case "Cancel"
+					Case "CANCEL"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Cancel Power option", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
 						local $ppush3 = '{"text": "canceled", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
-					 Case "LASTRAID\N\UD83D\UDCD1"
-						 If $AttackFile <> "" Then
-						 _PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid " & "\n" & $AttackFile)
+					Case "LASTRAID\N\UD83D\UDCD1"
+						 If $LootFileName <> "" Then
+						 _PushFile($LootFileName, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid" & "\n" & $LootFileName)
 						Else
 						 _Push($iOrigPushB & " | There is no last raid screenshot.")
 						EndIf
@@ -269,7 +270,7 @@ Func _RemoteControl()
 						_Push($iOrigPushB & " | Request to Restart..." & "\n" & "Your bot and BS are now restarting...")
 						SaveConfig()
 						_Restart()
-					Case "STOP\N\u23f9"
+					Case "STOP\N\U23F9"
 						SetLog("Telegram: Your request has been received. Bot is now stopped", $COLOR_GREEN)
 						If $Runstate = True Then
 						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is now stopping...")
@@ -419,15 +420,13 @@ Func _PushBullet($pMessage = "")
 	$oHTTP.Send($pPush)
     EndIf
 	if $pEnabled2= 1 then
-		 $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
-		; if $chat_id2 = 0 Then
 		 $access_token2 = $PushToken2
+		 $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 		 $oHTTP.Open("Get", "https://api.telegram.org/bot" & $access_token2 & "/getupdates" , False)
 		 $oHTTP.Send()
 		 $Result = $oHTTP.ResponseText
 		 local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
 		 $chat_id2 = _Arraypop($chat_id)
-		; endif
 		 $oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2&"/sendmessage", False)
 		 $oHTTP.SetRequestHeader("Content-Type", "application/json")
 	     Local $Date = @YEAR & '-' & @MON & '-' & @MDAY
@@ -463,6 +462,21 @@ Func _Push($pMessage)
 		   $oHTTP.Send($pPush3)
 	EndIf
 EndFunc   ;==>_Push
+
+Func Getchatid()
+    If $pEnabled2 = 0 Or $PushToken2 = "" Then Return
+		$access_token2 = $PushToken2
+		$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+		$oHTTP.Open("Get", "https://api.telegram.org/bot" & $access_token2 & "/getupdates" , False)
+		$oHTTP.Send()
+		$Result = $oHTTP.ResponseText
+		local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
+		$chat_id2 = _Arraypop($chat_id)
+		$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
+		$oHTTP.SetRequestHeader("Content-Type", "application/json")
+		local $ppush3 = '{"text": "select your remote", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","Power\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+		$oHTTP.Send($pPush3)
+EndFunc   ;==>Getchatid
 
 Func _PushFile($File, $Folder, $FileType, $body)
     If ($pEnabled = 0 and $pEnabled2 = 0)  Or ($PushToken = "" and $PushToken2 = "") Then Return
@@ -516,31 +530,31 @@ Func _PushFile($File, $Folder, $FileType, $body)
 			$oHTTP.Send($pPush)
 		 Else
 			SetLog("Telegram: Unable to send file " & $File, $COLOR_RED)
-			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
+			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to Telegram server...")
 		 EndIf
 	 EndIf
 
 EndFunc   ;==>_PushFile
 
-Func _PushFile2($File, $Folder, $FileType, $body)
-		 If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
-			$access_token2 = $PushToken2
-			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
-			Local $telegram_url = "https://api.telegram.org/bot" & $access_token2 & "/sendDocument"
-			$Result = RunWait($pCurl & " -i -X POST " & $telegram_url & ' -F chat_id="' & $chat_id2 &' " -F file=@"' & $sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File  & '"', "", @SW_HIDE)
-			$oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2 & "/sendDocument", False)
-			$oHTTP.SetRequestHeader("Content-Type", "application/json")
-			Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
-			 ;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_id": "' & $telegram_url & '", "body": "' & $body & '"}'
-			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
-			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url  & '"}'
-			$oHTTP.Send($pPush)
-		 Else
-			SetLog("Telegram: Unable to send file " & $File, $COLOR_RED)
-			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
-		 EndIf
-
-EndFunc   ;==>_PushFile
+;Func _PushFile2($File, $Folder, $FileType, $body)
+;		 If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
+;			$access_token2 = $PushToken2
+;			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+;			Local $telegram_url = "https://api.telegram.org/bot" & $access_token2 & "/sendDocument"
+;			$Result = RunWait($pCurl & " -i -X POST " & $telegram_url & ' -F chat_id="' & $chat_id2 &' " -F file=@"' & $sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File  & '"', "", @SW_HIDE)
+;			$oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2 & "/sendDocument", False)
+;			$oHTTP.SetRequestHeader("Content-Type", "application/json")
+;			Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
+;			 ;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_id": "' & $telegram_url & '", "body": "' & $body & '"}'
+;			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
+;			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url  & '"}'
+;			$oHTTP.Send($pPush)
+;		 Else
+;			SetLog("Telegram: Unable to send file " & $File, $COLOR_RED)
+;			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
+;		 EndIf
+;
+;EndFunc   ;==>_PushFile
 
 Func ReportPushBullet()
 
