@@ -226,28 +226,28 @@ Func _RemoteControl()
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Hibernate PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "PC got Hibernate", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "PC got Hibernate", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","Power\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(64)
 					Case "SHUT DOWN\N\U26A0\UFE0F"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Shut down PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "PC got Shutdown", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "PC got Shutdown", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","Power\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(5)
 					Case "STANDBY\N\U26A0\UFE0F"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Standby PC", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "PC got Standby", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "PC got Standby", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","Power\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 						Shutdown(32)
 					Case "CANCEL"
 						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Cancel Power option", $COLOR_GREEN)
 						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
 						$oHTTP.SetRequestHeader("Content-Type", "application/json")
-						local $ppush3 = '{"text": "canceled", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u23f9","pause\n\u23f8","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","lastraid\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","POWER\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						local $ppush3 = '{"text": "canceled", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["Stop\n\u23f9","Pause\n\u23f8","Restart\n\u21aa","Resume\n\u25b6"],["Help\n\u2753","Delete\n\ud83d\udeae","Lastraid\n\ud83d\udcd1","Stats\n\ud83d\udcca"],["Screenshot\n\ud83c\udfa6","Last raid txt\n\ud83d\udcc4","Power\n\ud83d\udda5"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
 						$oHTTP.Send($pPush3)
 					Case "LASTRAID\N\UD83D\UDCD1"
 						 If $LootFileName <> "" Then
