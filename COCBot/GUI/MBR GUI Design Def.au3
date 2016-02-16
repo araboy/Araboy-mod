@@ -18,52 +18,52 @@ Global $chkinferno, $chkmortar, $chkwizard, $chktesla, $chkair, $chkarcher, $chk
 Global $slddefTolerance , $hdefGUI
 
 Func GUI3()
-	$hdefGUI = GUICreate(GetTranslated(16,1, "Choose majeur Trap"), 305, 300, 85, 60, -1, $WS_EX_MDICHILD, $frmbot)
+	$hdefGUI = GUICreate(GetTranslated(17,1, "Choose majeur Trap"), 305, 300, 85, 60, -1, $WS_EX_MDICHILD, $frmbot)
 	GUISetIcon($pIconLib, $eIcnGUI)
 	$gui2Open = 1
 	GUISetOnEvent($GUI_EVENT_CLOSE, "CloseGUI3") ; Run this function when the secondary GUI [X] is clicked
-	GUICtrlCreateLabel(GetTranslated(16,2, "Choose which defense is majeur Trap"), 5, 5, 290, 28)
+	GUICtrlCreateLabel(GetTranslated(17,2, "Choose which defense is majeur Trap"), 5, 5, 290, 28)
 	$x = 5
 	$y = 45
-	Local $txtTip1 = GetTranslated(16,3, "If this box is checked, then the bot will look")
-	$chkinferno = GUICtrlCreateCheckbox(GetTranslated(16,4, "Enable Inferno Tower detect"), $x, $y)
+	Local $txtTip1 = GetTranslated(17,3, "If this box is checked, then the bot will look")
+	$chkinferno = GUICtrlCreateCheckbox(GetTranslated(17,4, "Enable Inferno Tower detect"), $x, $y)
 		$txtTip = $txtTip1&@CRLF&GetTranslated(15,5," Inferno Tower near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkinferno")
 	$y+= 25
-	$chkmortar = GUICtrlCreateCheckbox(GetTranslated(16,6, "Enable Mortar detect"), $x, $y)
+	$chkmortar = GUICtrlCreateCheckbox(GetTranslated(17,6, "Enable Mortar detect"), $x, $y)
 		$txtTip = $txtTip1&@CRLF&GetTranslated(15,7,"Mortar near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkmortar")
 	$y+= 25
-	$chkwizard = GUICtrlCreateCheckbox(GetTranslated(16,8, "Enable Wizard detect"), $x, $y)
-		$txtTip = $txtTip1&@CRLF&GetTranslated(16,9,"Wizard near TownHall.")
+	$chkwizard = GUICtrlCreateCheckbox(GetTranslated(17,8, "Enable Wizard detect"), $x, $y)
+		$txtTip = $txtTip1&@CRLF&GetTranslated(17,9,"Wizard near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkwizard")
 	$y+= 25
-	$chktesla = GUICtrlCreateCheckbox(GetTranslated(16,10, "Enable Tesla detect"), $x, $y)
-		$txtTip = $txtTip1&@CRLF&GetTranslated(16,11," Tesla near TownHall.")
+	$chktesla = GUICtrlCreateCheckbox(GetTranslated(17,10, "Enable Tesla detect"), $x, $y)
+		$txtTip = $txtTip1&@CRLF&GetTranslated(17,11," Tesla near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chktesla")
 	$y+= 25
-	$chkair = GUICtrlCreateCheckbox(GetTranslated(16,12, "Enable Air defense detect"), $x, $y)
-		$txtTip = $txtTip1&@CRLF&GetTranslated(16,13," Air defense near TownHall.")
+	$chkair = GUICtrlCreateCheckbox(GetTranslated(17,12, "Enable Air defense detect"), $x, $y)
+		$txtTip = $txtTip1&@CRLF&GetTranslated(17,13," Air defense near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkair")
 	$y+= 25
-	$chkarcher = GUICtrlCreateCheckbox(GetTranslated(16,14, "Enable Archer detect"), $x, $y)
-		$txtTip = $txtTip1&@CRLF&GetTranslated(16,15," Archer tower near TownHall.")
+	$chkarcher = GUICtrlCreateCheckbox(GetTranslated(17,14, "Enable Archer detect"), $x, $y)
+		$txtTip = $txtTip1&@CRLF&GetTranslated(17,15," Archer tower near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkarcher")
 	$y+= 25
-	$chkcanon = GUICtrlCreateCheckbox(GetTranslated(16,16, "Enable Canon detect"), $x, $y)
-		$txtTip = $txtTip1&@CRLF&GetTranslated(16,17," Canon near TownHall.")
+	$chkcanon = GUICtrlCreateCheckbox(GetTranslated(17,16, "Enable Canon detect"), $x, $y)
+		$txtTip = $txtTip1&@CRLF&GetTranslated(17,17," Canon near TownHall.")
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetState(-1, $GUI_CHECKED)
 		GUICtrlSetOnEvent(-1, "chkcanon")
@@ -71,9 +71,9 @@ Func GUI3()
 
 	$y+= 50
 
-	$lblTolerancedef = GUICtrlCreateLabel("-8" & _PadStringCenter(GetTranslated(16,18, "Tolerance"), 80, " ") & "8", 5, $y - 15)
+	$lblTolerancedef = GUICtrlCreateLabel("-8" & _PadStringCenter(GetTranslated(17,18, "Tolerance"), 80, " ") & "8", 5, $y - 15)
 	$slddefTolerance = GUICtrlCreateSlider(5, $y, 290, 20, BITOR($TBS_TOOLTIPS, $TBS_AUTOTICKS)) ;,
-	$txtTip = GetTranslated(16,19, "Use this slider to adjust the tolerance of ALL images.") &@CRLF& GetTranslated(16,20, "If you want to adjust individual images, you must edit the files.")
+	$txtTip = GetTranslated(17,19, "Use this slider to adjust the tolerance of ALL images.") &@CRLF& GetTranslated(17,20, "If you want to adjust individual images, you must edit the files.")
 		GUICtrlSetBkColor(-1, $GUI_BKCOLOR_TRANSPARENT)
 		GUICtrlSetTip(-1, $txtTip)
 		_GUICtrlSlider_SetTipSide(-1, $TBTS_BOTTOM)
@@ -83,7 +83,7 @@ Func GUI3()
 		GUICtrlSetOnEvent(-1, "slddefTolerance")
 
 	$y+=30
-	$btnSaveExitdef = GUICtrlCreateButton(GetTranslated(16,21, "Save And Close"), 5, $y, 290, 20)
+	$btnSaveExitdef = GUICtrlCreateButton(GetTranslated(17,21, "Save And Close"), 5, $y, 290, 20)
 	GUICtrlSetOnEvent(-1, "CloseGUI3")
 
 EndFunc
