@@ -21,14 +21,16 @@
 
 Func ansi2unicode($str)
 	Local $keytxt = StringSplit($str,"\n",1)
-	Local $utfStr = Execute("'" & StringRegExpReplace($keytxt[1], "(\\u([[:xdigit:]]{4}))","' & ChrW(0x$2) & '") & "'")
-	Local $ansiStr = _WinAPI_WideCharToMultiByte($utfStr)
+	Local $aSRE = StringRegExp($keytxt[1], "\\u(....)", 3)
+	For $i = 0 To UBound($aSRE) - 1
+		$keytxt[1] = StringReplace($keytxt[1], "\u" & $aSRE[$i], BinaryToString("0x" & $aSRE[$i], 3))
+	Next
 	if $keytxt[0] > 1  Then
-		$ansiStr2 = $ansiStr &"\n" & $keytxt[2]
+		$ansiStr = $keytxt[1] &"\n" & $keytxt[2]
 	Else
-		$ansiStr2 = $ansiStr
+		$ansiStr = $keytxt[1]
 	EndIf
-	Return $ansiStr2
+	Return $ansiStr
 EndFunc
 
 Func _RemoteControl()
