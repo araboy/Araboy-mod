@@ -305,77 +305,7 @@ Func _RemoteControl()
 		 EndSwitch
 #cs
 		 Switch $uclm
-			Case "BOT HELP"
-						Local $txtHelp = "You can remotely control your bot sending commands following this syntax:"
-						$txtHelp &= "\n" & "BOT HELP - send this help message"
-						$txtHelp &= "\n" & "BOT DELETE  - delete all your previous Push message"
-						$txtHelp &= "\n" & "BOT <Village Name> RESTART - restart the bot named <Village Name> and bluestacks"
-						$txtHelp &= "\n" & "BOT <Village Name> STOP - stop the bot named <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> PAUSE - pause the bot named <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> RESUME   - resume the bot named <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> STATS - send Village Statistics of <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> LOG - send the current log file of <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> LASTRAID - send the last raid loot screenshot of <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> LASTRAIDTXT - send the last raid loot values of <Village Name>"
-						$txtHelp &= "\n" & "BOT <Village Name> SCREENSHOT - send a screenshot of <Village Name>"
-						$txtHelp &= "\n"
-						$txtHelp &= "\n" & "Examples:"
-						$txtHelp &= "\n" & "Bot MyVillage Pause"
-						$txtHelp &= "\n" & "Bot Delete "
-						$txtHelp &= "\n" & "Bot MyVillage ScreenShot"
-						$txtHelp &= "\n" & "Send and recieve chats via pushbullet. Use BOT <myvillage> GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and BOT <myvillage> SENDCHAT <chat message> to send a chat to your clan"
-						_Push($iOrigPushB & " | Request for Help" & "\n" & $txtHelp)
-						SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushB & ". Help has been sent", $COLOR_GREEN)
-			Case "BOT " & StringUpper($iOrigPushB) & " PAUSE"
-						If $TPaused = False And $Runstate = True Then
-						 TogglePauseImpl("Push")
-						Else
-						 SetLog("Pushbullet: Your bot is currently paused, no action was taken", $COLOR_GREEN)
-						 _Push($iOrigPushB & " | Request to Pause" & "\n" & "Your bot is currently paused, no action was taken")
-						EndIf
-			Case "BOT " & StringUpper($iOrigPushB) & " RESUME"
-						If $TPaused = True And $Runstate = True Then
-						 TogglePauseImpl("Push")
-						Else
-						 SetLog("Pushbullet: Your bot is currently resumed, no action was taken", $COLOR_GREEN)
-						 _Push($iOrigPushB & " | Request to Resume" & "\n" & "Your bot is currently resumed, no action was taken")
-						EndIf
-			Case "BOT DELETE"
-						$oHTTP.Open("Get", $url & $access_token2 & "/getupdates?offset=" & $lastuid  , False)
-	                    $oHTTP.Send()
-						SetLog("Pushbullet: Your request has been received.", $COLOR_GREEN)
-			Case "BOT " & StringUpper($iOrigPushB) & " LOG"
-						SetLog("Pushbullet: Your request has been received from " & $iOrigPushB & ". Log is now sent", $COLOR_GREEN)
-						_PushFile($sLogFName, "logs", "text/plain; charset=utf-8", $iOrigPushB & " | Current Log " & "\n")
-			Case "BOT " & StringUpper($iOrigPushB) & " LASTRAID"
-						If $AttackFile <> "" Then
-						 _PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid " & "\n" & $AttackFile)
-						Else
-						 _Push($iOrigPushB & " | There is no last raid screenshot.")
-						EndIf
-						SetLog("Pushbullet: Push Last Raid Snapshot...", $COLOR_GREEN)
-			Case "BOT " & StringUpper($iOrigPushB) & " LASTRAIDTXT"
-						SetLog("Pusbullet: Your request has been received. Last Raid txt sent", $COLOR_GREEN)
-						_Push($iOrigPushB & " | Last Raid txt" & "\n" & "[G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [D]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies)
-			Case "BOT " & StringUpper($iOrigPushB) & " STATS"
-						SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
-						_Push($iOrigPushB & " | Stats Village Report" & "\n" & "At Start\n[G]: " & _NumberFormat($GoldStart) & " [E]: " & _NumberFormat($ElixirStart) & " [D]: " & _NumberFormat($DarkStart) & " [T]: " & $TrophyStart & "\n\nNow (Current Resources)\n[G]: " & _NumberFormat($GoldVillage) & " [E]: " & _NumberFormat($ElixirVillage) & " [D]: " & _NumberFormat($DarkVillage) & " [T]: " & $TrophyVillage & " [GEM]: " & $GemCount & "\n \n [No. of Free Builders]: " & $FreeBuilder & "\n [No. of Wall Up]: G: " & $wallgoldmake & "/ E: " & $wallelixirmake & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "\nSkipped: " & GUICtrlRead($lblresultvillagesskipped))
-			Case "BOT " & StringUpper($iOrigPushB) & " SCREENSHOT"
-						SetLog("Pushbullet: ScreenShot request received", $COLOR_GREEN)
-						$RequestScreenshot = 1
-			Case "BOT " & StringUpper($iOrigPushB) & " RESTART"
-						SetLog("Your request has been received. Bot and BS restarting...", $COLOR_GREEN)
-						_Push($iOrigPushB & " | Request to Restart..." & "\n" & "Your bot and BS are now restarting...")
-						SaveConfig()
-						_Restart()
-			Case "BOT " & StringUpper($iOrigPushB) & " STOP"
-						SetLog("Your request has been received. Bot is now stopped", $COLOR_GREEN)
-						If $Runstate = True Then
-						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is now stopping...")
-						 btnStop()
-						Else
-						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is currently stopped, no action was taken")
-						EndIf
+
 			Case Else ; Chat Bot
 					$startCmd = StringLeft($uclm, StringLen("BOT " & StringUpper($iOrigPushB) & " SENDCHAT "))
 					If $startCmd = "BOT " & StringUpper($iOrigPushB) & " SENDCHAT " Then

@@ -23,9 +23,9 @@ $tabNotify = GUICtrlCreateTabItem(GetTranslated(9,1, "Notify"))
 	$chkPBenabled = GUICtrlCreateCheckbox(GetTranslated(9,3, "Enable pushbullet"), $x + 40, $y - 10)
 		GUICtrlSetOnEvent(-1, "chkPBenabled")
 		GUICtrlSetTip(-1, GetTranslated(9,4, "Enable PushBullet notifications"))
-	$chkPBenabled2 = GUICtrlCreateCheckbox("Enable Telegram", $x + 40, $y +10 )
+	$chkPBenabled2 = GUICtrlCreateCheckbox(GetTranslated(9,53,"Enable Telegram"), $x + 40, $y +10 )
 	    GUICtrlSetOnEvent(-1, "chkPBenabled2")
-	    GUICtrlSetTip(-1, "Enable Telegram notifications")
+	    GUICtrlSetTip(-1,GetTranslated(9,55, "Enable Telegram notifications"))
 	$y += 32
 	$chkPBRemote = GUICtrlCreateCheckbox(GetTranslated(9,5, "Remote Control"), $x + 40, $y)
 		GUICtrlSetTip(-1, GetTranslated(9,6, "Enables PushBullet Remote function"))
@@ -55,9 +55,9 @@ $tabNotify = GUICtrlCreateTabItem(GetTranslated(9,1, "Notify"))
 		GUICtrlSetTip(-1, GetTranslated(9,17, "You need a Token to use PushBullet notifications. Get a token from PushBullet.com"))
 		GUICtrlSetState(-1, $GUI_DISABLE)
 
-    $lblPushBTokenValue2 = GUICtrlCreateLabel("Access Token2:", $x, $y+23, -1, -1, $SS_RIGHT)
+    $lblPushBTokenValue2 = GUICtrlCreateLabel(GetTranslated(9,54,"Access Token T:"), $x, $y+23, -1, -1, $SS_RIGHT)
 	$PushBTokenValue2 = GUICtrlCreateInput("", $x + 140, $y +21, 280, 19)
-		GUICtrlSetTip(-1, "You need a Token to use Telegram notifications. Get a token from @BotFather")
+		GUICtrlSetTip(-1, GetTranslated(9,56,"You need a Token to use Telegram notifications. Get a token from @BotFather"))
 		GUICtrlSetState(-1, $GUI_DISABLE)
 
 

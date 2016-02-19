@@ -56,8 +56,8 @@ $tabSmartZap = GUICtrlCreateTabItem("SmartZap")
 
 	   $grpzapTHS = GUICtrlCreateGroup(GetTranslated(16,13,"TH snipe DE Drill Zap"), $x - 20, $y - 20, 440, 70)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x - 16, $y, 24, 24)
-		$chkDrillZapTH = GUICtrlCreateCheckbox("Zap DE Drills", $x + 12, $y+1, -1, -1)
-			$txtTip = "Use this if you want to Zap Drill when TH Snipping"
+		$chkDrillZapTH = GUICtrlCreateCheckbox(GetTranslated(16,14,"Zap DE Drills"), $x + 12, $y+1, -1, -1)
+			$txtTip = GetTranslated(16,15,"Use this if you want to Zap Drill when TH Snipping")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 
