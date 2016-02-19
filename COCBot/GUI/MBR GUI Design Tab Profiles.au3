@@ -12,7 +12,7 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-$tabProfiles = GUICtrlCreateTabItem("Profiles")
+$tabProfiles = GUICtrlCreateTabItem(GetTranslated(19,33,"Profiles"))
 
 Local $x = 30, $y = 150
 	$grpControls = GUICtrlCreateGroup(GetTranslated(19,1,"Profiles"), $x - 20, $y - 20, 450, 45)

@@ -15,14 +15,15 @@
 
 Global $chkLvl6, $chkLvl7, $chkLvl8, $chkLvl9, $chkLvl10, $chkLvl11, $chkLvl12
 Global $cmbLvl6, $cmbLvl7, $cmbLvl8, $cmbLvl9, $cmbLvl10, $cmbLvl11, $cmbLvl12
+Global $LblCollFullLvl6, $LblCollFullLvl7, $LblCollFullLvl8, $LblCollFullLvl9, $LblCollFullLvl10, $LblCollFullLvl11, $LblCollFullLvl12, $lblTolerance, $btnSaveExit, $LblChColl
 Global $sldCollectorTolerance
 
 Func GUI2()
-	$hCollectorGUI = GUICreate(GetTranslated(15,1, "Choose Collectors"), 305, 300, 85, 60, -1, $WS_EX_MDICHILD, $frmbot)
+	$hCollectorGUI = GUICreate(GetTranslated(15,1, "Choose Collectors"), 338, 300, 85, 60, -1, $WS_EX_MDICHILD, $frmbot)
 	GUISetIcon($pIconLib, $eIcnGUI)
 	$gui2Open = 1
 	GUISetOnEvent($GUI_EVENT_CLOSE, "CloseGUI2") ; Run this function when the secondary GUI [X] is clicked
-	GUICtrlCreateLabel(GetTranslated(15,2, "Choose which collectors to search for while looking for a dead base. Also, choose how full they must be."), 5, 5, 290, 28)
+	$LblChColl = GUICtrlCreateLabel(GetTranslated(15,2, "Choose which collectors to search for while looking for a dead base. Also, choose how full they must be."), 5, 5, 290, 28)
 	$x = 5
 	$y = 45
 	Local $txtTip1 = GetTranslated(15,15, "If this box is checked, then the bot will look")
@@ -76,49 +77,49 @@ Func GUI2()
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10, "(N/A)")& "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl6")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl6 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl7 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,24,'Select how full a level 7 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl7")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl7 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl8 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,25,'Select how full a level 8 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl8")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl8 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl9 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,26,'Select how full a level 9 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl9")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl9 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl10 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,27,'Select how full a level 10 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl10")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl10 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl11 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,28,'Select how full a level 11 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl11")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl11 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 25
 	$cmbLvl12 = GUICtrlCreateCombo("", $x, $y, 70, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		$txtTip = GetTranslated(15,29,'Select how full a level 12 collector needs to be for it to be marked "dead"')
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetData(-1, "50% " & GetTranslated(15,10,-1) & "|75%|90%+")
 		GUICtrlSetOnEvent(-1, "cmbLvl12")
-		GuiCtrlCreateLabel($txtFull, 286,$y+3)
+	$LblCollFullLvl12 = GuiCtrlCreateLabel($txtFull, 286,$y+3)
 	$y+= 50
 
 	$lblTolerance = GUICtrlCreateLabel("-15" & _PadStringCenter(GetTranslated(15,11, "Tolerance"), 80, " ") & "15", 5, $y - 15)

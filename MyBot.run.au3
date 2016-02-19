@@ -39,7 +39,7 @@ EndIf
 #include "COCBot\MBR Global Variables.au3"
 
 $sBotVersion = "v5.1.5" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sBotTitle = "My Bot " & $sBotVersion & " MOD Araboy V2.9.1"
+$sBotTitle = "My Bot " & $sBotVersion & " MOD Araboy V2.9.2"
 
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
 #include "COCBot\functions\Main Screen\Android.au3"
@@ -125,6 +125,8 @@ SetLog("Android Emulator Configuration: " & $Android & ($AndroidInstance <> "" ?
 AdlibRegister("PushBulletRemoteControl", $PBRemoteControlInterval)
 AdlibRegister("PushBulletDeleteOldPushes", $PBDeleteOldPushesInterval)
 
+
+RTLLang() ; Check Language For RTL all object and ...
 
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 

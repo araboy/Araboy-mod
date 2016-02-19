@@ -44,15 +44,15 @@
 
 
 	Local $x = 157, $y = 130
-	$grpSaveTroops = GUICtrlCreateGroup("Save Troops", $x , $y , 74, 85)
-		Local $txtTip = "If collectors outside less than Percent Do Action"
-		$chkChangeFF = GUICtrlCreateCheckbox("outside col", $x + 2, $y +12, -1, -1)
+	$grpSaveTroops = GUICtrlCreateGroup(GetTranslated(4,118,"Save Troops"), $x , $y , 74, 85)
+		Local $txtTip = GetTranslated(4,119,"If collectors outside less than Percent Do Action")
+		$chkChangeFF = GUICtrlCreateCheckbox(GetTranslated(4,120,"outside col"), $x + 2, $y +12, -1, -1)
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetOnEvent(-1, "chkChangeFF")
 		$txtTHpercentCollectors = GUICtrlCreateInput("80", $x + 5 , $y + 34, 21, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetLimit(-1, 3)
-		$lblChangeFF = GUICtrlCreateLabel("% Use ", $x + 30 , $y + 39, -1, -1)
+		$lblChangeFF = GUICtrlCreateLabel(GetTranslated(4,121,"% Use "), $x + 30 , $y + 39, -1, -1)
 		GUICtrlSetTip(-1, $txtTip)
 		$cmbInsideCol = GUICtrlCreateCombo("", $x + 3, $y +58, 64, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		GUICtrlSetData(-1, "4Sides|4Fingers|Return", "4Fingers")
@@ -294,14 +294,14 @@
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$lblATBullyMode = GUICtrlCreateLabel(GetTranslated(4,70, "search(es)."), $x + 135, $y + 5, -1, -1)
 		$y +=25
-		$lblATBullyMode = GUICtrlCreateLabel(GetTranslated(4,71, "Max TH level") & ":", $x - 10, $y + 3, 90, -1, $SS_RIGHT)
+		$lblATBullyMode1 = GUICtrlCreateLabel(GetTranslated(4,71, "Max TH level") & ":", $x - 10, $y + 3, 90, -1, $SS_RIGHT) ; Rename lblATBullyMode to lblATBullyMode1
 		$cmbYourTH = GUICtrlCreateCombo("", $x + 95, $y, 50, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = GetTranslated(4,72, "TH Bully: Max. Townhall level to bully.")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetData(-1, "4-6|7|8|9|10|11", "4-6")
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$y += 24
-		GUICtrlCreateLabel(GetTranslated(4,73, "When found, Attack with settings from")&":", $x + 10, $y, -1, -1, $SS_RIGHT)
+		$lblATBullyMode2 = GUICtrlCreateLabel(GetTranslated(4,73, "When found, Attack with settings from")&":", $x + 10, $y, -1, -1, $SS_RIGHT) ; Add name ($lblATBullyMode2)
 		$y += 14
 		$radUseDBAttack = GUICtrlCreateRadio(GetTranslated(4,74, "DeadBase Atk."), $x + 20, $y, -1, -1)
 			GUICtrlSetTip(-1, GetTranslated(4,75, "Use Dead Base attack settings when attacking a TH Bully match."))

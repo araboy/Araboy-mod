@@ -233,4 +233,5 @@ EndFunc   ;==>chkTSMeetDE
 
  Func btnConfigureDef()
  	OpenGUI3()
+	DeflPosChange() ; Call Func for RTL language (change Def Tab position)
  EndFunc

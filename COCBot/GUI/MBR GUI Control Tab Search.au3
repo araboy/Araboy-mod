@@ -229,4 +229,5 @@ EndFunc   ;==>chkRestartSearchLimit
 
 Func btnConfigureCollectors()
 	OpenGUI2()
+	CollPosChange() ; Call Func for RTL language (change Collectors Tab position)
 EndFunc

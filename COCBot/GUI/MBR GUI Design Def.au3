@@ -16,13 +16,14 @@
 Global $chkinferno, $chkmortar, $chkwizard, $chktesla, $chkair, $chkarcher, $chkcanon
 
 Global $slddefTolerance , $hdefGUI
+Global $lblTolerancedef, $LblChDef
 
 Func GUI3()
 	$hdefGUI = GUICreate(GetTranslated(17,1, "Choose majeur Trap"), 305, 300, 85, 60, -1, $WS_EX_MDICHILD, $frmbot)
 	GUISetIcon($pIconLib, $eIcnGUI)
 	$gui2Open = 1
 	GUISetOnEvent($GUI_EVENT_CLOSE, "CloseGUI3") ; Run this function when the secondary GUI [X] is clicked
-	GUICtrlCreateLabel(GetTranslated(17,2, "Choose which defense is majeur Trap"), 5, 5, 290, 28)
+	$LblChDef = GUICtrlCreateLabel(GetTranslated(17,2, "Choose which defense is majeur Trap"), 5, 5, 290, 28)
 	$x = 5
 	$y = 45
 	Local $txtTip1 = GetTranslated(17,3, "If this box is checked, then the bot will look")

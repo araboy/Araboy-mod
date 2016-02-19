@@ -165,7 +165,7 @@ $tabAttack = GUICtrlCreateTabItem(GetTranslated(3,1, "Attack"))
  			GUICtrlSetTip(-1, $txtTip)
 	$x -= 70
 	$y = 335
-		$lblUseInBattleDB = GUICtrlCreateLabel(GetTranslated(3,68, -1) & ":", $x, $y + 5, -1, -1)
+		$lblUseInBattleAB = GUICtrlCreateLabel(GetTranslated(3,68, -1) & ":", $x, $y + 5, -1, -1)  ; Edite lblUseInBattleDB to lblUseInBattleAB
 		$y +=27
 		GUICtrlCreateIcon($pIconLib, $eIcnKing, $x, $y, 24, 24)
 			$txtTip = GetTranslated(3,41, -1)
